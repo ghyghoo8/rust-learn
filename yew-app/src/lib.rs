@@ -10,6 +10,8 @@ enum Msg {
     AddOne,
 }
 
+
+// jsx写法===>
 impl Component for Model {
     type Message = Msg;
     type Properties = ();
@@ -34,6 +36,7 @@ impl Component for Model {
         false
     }
 
+    // html 代码===>
     fn view(&self) -> Html {
         html! {
             <div>
