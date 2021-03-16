@@ -1,0 +1,21 @@
+[package]
+name = "fw"
+version = "0.1.0"
+authors = ["Nicho <yefanglin@bigo.sg>"]
+license = "MIT"
+build = "build.rs"
+edition = "2018"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "fw"
+crate-type = ["cdylib"]
+
+[build-dependencies]
+neon-build = "0.7.1"
+
+[dependencies]
+neon = "0.7.1"
+log = "0.4.8"
+url = "1.6"
+notify = "4.0.14"
