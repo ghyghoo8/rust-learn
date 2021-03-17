@@ -12,6 +12,7 @@ fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
     Ok(cx.string("hello neon"))
 }
 
+// 注册导出 & binding
 register_module!(mut cx, {
     // 导出一个方法
     cx.export_function("hello", hello);

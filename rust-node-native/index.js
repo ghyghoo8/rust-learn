@@ -15,7 +15,9 @@ app.use(async ctx => {
   }</tbody></table>`
 });
 chokidar.watch('./static').on('all', (event, path) => {
-  watch_history.push(`<td>${ICON_EMUN[event]||'🧐'}</td><td>${event}</td><td>${path}</td><td>time:${new Date().toLocaleString()}</td>`);
+  if (['add', 'change'].includes(event)) {
+    watch_history.push(`<td>${ICON_EMUN[event]||'🧐'}</td><td>${event}</td><td>${path}</td><td>time:${new Date().toLocaleString()}</td>`); 
+  }
   console.log(event, path);
 });
 console.log(`server run===>  http://localhost:${PORT}`)
