@@ -13,20 +13,18 @@ const ICON_EMUN = {
 }
 
 const BASE_PATH = './static'
-const filesCache = {};
 
+const filesCache = {}; // 缓存file watcher Map
 app.use(async (ctx, next) => {
   const files = fs.readdirSync(BASE_PATH)
   files.map(f => {
     const _path = `${BASE_PATH}/${f}`;
-    let type = 'add';
+    let type = false;
     let d = filesCache[_path];
-    if (d) {
+    if (d) { // 已缓存，则直接拿 watcher
       if (d.version < d.watcher.version()) {
         d.version = d.watcher.version()
         type = 'change';
-      } else {
-        type = false
       }
     } else {
       const wathcer = new nativeTools.NodeFileWatcher(_path);
@@ -35,12 +33,12 @@ app.use(async (ctx, next) => {
         watcher: wathcer,
         version: wathcer.version()
       }
-      filesCache[_path] = d;
+      filesCache[_path] = d; // 缓存 watcher
+      type = 'add';
     }
     // 有变更，则增加渲染数据===>
     type && watch_history.push(`<td>${ICON_EMUN[type]}</td><td>${type}</td><td>${_path}</td><td>${d.version}</td>`)
   })
-  
   await next();
 })
 
